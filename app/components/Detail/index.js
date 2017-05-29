@@ -12,6 +12,7 @@ import styles from '../../Styles';
 
 export default class SchoolDetail extends Component{
   render() {
+    let schoolDetail = this.props.schoolDetail;
     return (
       <View style={styles.mainContainer}>
         <Text style={styles.title}>
