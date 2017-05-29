@@ -7,17 +7,12 @@ import Main from './components/Main';
 export default class NYCSchoolExplorerApp extends Component {
   render() {
     return (
-      <View style={styles.container}>
-        <Header />
-          <View style={styles.content}>
-            <NavigatorIOS
-              initialRoute={{
-                component: Main,
-                title: 'NYC School Explorer',
-            }} />
-          </View>
-        <Footer />
-      </View>
+      <NavigatorIOS
+        style={styles.container}
+        initialRoute={{
+          component: Main,
+          title: 'NYC School Explorer',
+      }} />
     );
   }
 }
@@ -25,13 +20,6 @@ export default class NYCSchoolExplorerApp extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F5F5F5',
-    ...Platform.select({
-      ios: { paddingTop: 30 }
-    })
+    backgroundColor: '#F5F5F5'
   },
-  content: {
-    flex: 1,
-    backgroundColor: '#07889B',
-  }
 });

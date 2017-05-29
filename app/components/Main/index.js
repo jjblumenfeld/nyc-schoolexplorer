@@ -10,12 +10,22 @@ import {
 } from 'react-native';
 
 import Detail from '../Detail';
+import styles from '../../Styles';
 
 import SchoolData from '../../data/SE_Schools.json';
+import SchoolAccountability from '../../data/SE_Accountability.json';
+import SchoolEnrollment from '../../data/SE_Enrollment.json';
+import SchoolStaff from '../../data/SE_Staff.json';
+import School_Class_Size from '../../data/SE_Class_Size.json';
 
-class Main extends Component {
+export default class Main extends Component {
   constructor(props) {
     super(props);
+
+    SchoolData.sort(function(schoolA, schoolB) {
+      return schoolA.SCHOOL_NAME.localeCompare(schoolB.SCHOOL_NAME);
+    });
+
     this.schoolDataSource = new ListView.DataSource({
       rowHasChanged: (originalRow, newRow) => originalRow !== newRow
     });
@@ -32,7 +42,7 @@ class Main extends Component {
     this.setState({
       schoolDataList: this.schoolDataSource.cloneWithRows(
         SchoolData.filter(function(element) {
-          return filterRegex.exec(element.ENTITY_NAME);
+          return filterRegex.exec(element.SCHOOL_NAME);
         })
       ),
       searchName: searchText
@@ -44,10 +54,17 @@ class Main extends Component {
       return element.ENTITY_CD === schoolId;
     });
 
+    let selectedSchoolDetail = SchoolAccountability.filter(function(element) {
+      return element.ENTITY_CD === schoolId;
+    });
+
     this.props.navigator.push({
-      title: selectedSchool.ENTITY_NAME,
+      title: selectedSchool.SCHOOL_NAME,
       component: Detail,
-      passProps: { schoolData: selectedSchool }
+      passProps: {
+        schoolInfo: selectedSchool,
+        schoolDetail: selectedSchoolDetail
+      }
     });
   }
   getListItemBackgroundStyle(rowId) {
@@ -74,7 +91,7 @@ class Main extends Component {
               onPress={() => this.handleSchoolSelected(rowData.ENTITY_CD)}
             >
               <Text style={styles.listItem}>
-                {rowData.ENTITY_NAME}
+                {rowData.SCHOOL_NAME}
               </Text>
             </TouchableHighlight>
           )}
@@ -83,43 +100,3 @@ class Main extends Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  mainContainer: {
-    flex: 1,
-  },
-  title: {
-    marginBottom: 20,
-    fontSize: 25,
-    textAlign: 'center',
-    color: '#fff'
-  },
-  list: {
-    marginTop: 12,
-    paddingTop: 0
-  },
-  listItem: {
-    padding: 3,
-    marginBottom: 2,
-    marginLeft: 2,
-    color: '#d1d1d1'
-  },
-  listItemEven: {
-    //backgroundColor: '#6ab7c3',
-  },
-  listItemOdd: {
-
-  },
-  searchInput: {
-    height: 50,
-    padding: 4,
-    marginRight: 5,
-    fontSize: 23,
-    borderWidth: 1,
-    borderColor: 'white',
-    borderRadius: 8,
-    color: 'white'
-  }
-});
-
-module.exports = Main;
