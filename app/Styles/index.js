@@ -5,15 +5,21 @@ import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   mainContainer: {
-    padding: 30,
     marginTop: 65,
+    paddingLeft: 20,
+    paddingRight: 20,
     flexDirection: 'column',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     backgroundColor: '#07889B',
-    flex: 1
+    flex: 1,
+    flexWrap: 'wrap',
+  },
+  mainContent: {
+    marginTop: 20,
   },
   title: {
-    marginBottom: 20,
+    marginTop: 20,
+    marginBottom: 15,
     fontSize: 25,
     textAlign: 'center',
     color: '#fff'
@@ -34,6 +40,31 @@ const styles = StyleSheet.create({
   listItemOdd: {
 
   },
+
+  infoListWrapper: {
+    justifyContent: 'flex-start',
+    flexDirection: 'row',
+    alignContent: 'flex-start',
+    flexWrap: 'wrap',
+    flex: 1,
+  },
+
+  infoListItem: {
+    flex: 0.5,
+  },
+
+  isFullWidth: {
+    flex: 1
+  },
+
+  infoListItemLabel: {
+    color: '#fff'
+  },
+
+  infoListItemValue: {
+    color: '#fff'
+  },
+
   searchInput: {
     height: 50,
     padding: 4,

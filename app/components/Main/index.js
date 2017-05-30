@@ -6,7 +6,8 @@ import {
   View,
   ListView,
   TextInput,
-  TouchableHighlight
+  TouchableHighlight,
+  ActivityIndicator
 } from 'react-native';
 
 import Detail from '../Detail';
@@ -16,7 +17,7 @@ import SchoolData from '../../data/SE_Schools.json';
 import SchoolAccountability from '../../data/SE_Accountability.json';
 import SchoolEnrollment from '../../data/SE_Enrollment.json';
 import SchoolStaff from '../../data/SE_Staff.json';
-import School_Class_Size from '../../data/SE_Class_Size.json';
+import SchoolClassSize from '../../data/SE_Class_Size.json';
 
 export default class Main extends Component {
   constructor(props) {
@@ -32,7 +33,8 @@ export default class Main extends Component {
 
     this.state = {
       schoolDataList: this.schoolDataSource.cloneWithRows(SchoolData),
-      searchName: ''
+      searchName: '',
+      isLoading: false,
     };
   }
 
@@ -50,25 +52,39 @@ export default class Main extends Component {
   }
 
   handleSchoolSelected(schoolId) {
-    let selectedSchool = SchoolData.find(function(element) {
+    this.state.isLoading = true;
+    let selectedSchool = SchoolStaff.find(function(element) {
       return element.ENTITY_CD === schoolId;
     });
 
-    let selectedSchoolDetail = SchoolAccountability.filter(function(element) {
+    let selectedSchoolEnroll = SchoolEnrollment.filter(function(element) {
       return element.ENTITY_CD === schoolId;
     });
+
+    let selectedSchoolAccountability = SchoolAccountability.filter(function(
+      element
+    ) {
+      return element.ENTITY_CD === schoolId;
+    });
+
+    let selectedSchoolClassSize = SchoolClassSize.filter(function(element) {
+      return element.ENTITY_CD === schoolId;
+    });
+
 
     this.props.navigator.push({
       title: selectedSchool.SCHOOL_NAME,
       component: Detail,
       passProps: {
         schoolInfo: selectedSchool,
-        schoolDetail: selectedSchoolDetail
+        schoolEnrollment: selectedSchoolEnroll,
+        schoolAccountability: selectedSchoolAccountability,
+        schoolClassSize: selectedSchoolClassSize,
       }
     });
   }
   getListItemBackgroundStyle(rowId) {
-    return (rowId % 2) ? styles.listItemEven : styles.listItemOdd;
+    return rowId % 2 ? styles.listItemEven : styles.listItemOdd;
   }
   render() {
     return (
@@ -85,9 +101,9 @@ export default class Main extends Component {
           automaticallyAdjustContentInsets={false}
           style={styles.list}
           dataSource={this.state.schoolDataList}
-          renderRow={ (rowData, sectionID, rowID) => (
+          renderRow={(rowData, sectionID, rowID) => (
             <TouchableHighlight
-              style={styles.listitem, this.getListItemBackgroundStyle(rowID)}
+              style={(styles.listitem, this.getListItemBackgroundStyle(rowID))}
               onPress={() => this.handleSchoolSelected(rowData.ENTITY_CD)}
             >
               <Text style={styles.listItem}>
@@ -96,6 +112,10 @@ export default class Main extends Component {
             </TouchableHighlight>
           )}
         />
+        <ActivityIndicator
+          animating={this.state.isLoading}
+          color="#111"
+          size="large"></ActivityIndicator>
       </View>
     );
   }
