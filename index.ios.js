@@ -27,7 +27,7 @@ class NYCSchoolExplorerApp extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F5F5F5',
+    backgroundColor: '#07889B',
   }
 });
 

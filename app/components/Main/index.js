@@ -7,7 +7,6 @@ import {
   ListView,
   TextInput,
   TouchableHighlight,
-  ActivityIndicator
 } from 'react-native';
 
 import Detail from '../Detail';
@@ -57,7 +56,7 @@ export default class Main extends Component {
       return element.ENTITY_CD === schoolId;
     });
 
-    let selectedSchoolEnroll = SchoolEnrollment.filter(function(element) {
+    let selectedSchoolEnroll = SchoolEnrollment.find(function(element) {
       return element.ENTITY_CD === schoolId;
     });
 
@@ -67,10 +66,11 @@ export default class Main extends Component {
       return element.ENTITY_CD === schoolId;
     });
 
-    let selectedSchoolClassSize = SchoolClassSize.filter(function(element) {
+    let selectedSchoolClassSize = SchoolClassSize.find(function(element) {
       return element.ENTITY_CD === schoolId;
     });
 
+    console.log(selectedSchoolEnroll);
 
     this.props.navigator.push({
       title: selectedSchool.SCHOOL_NAME,
@@ -112,10 +112,6 @@ export default class Main extends Component {
             </TouchableHighlight>
           )}
         />
-        <ActivityIndicator
-          animating={this.state.isLoading}
-          color="#111"
-          size="large"></ActivityIndicator>
       </View>
     );
   }

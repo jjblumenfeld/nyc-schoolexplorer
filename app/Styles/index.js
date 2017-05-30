@@ -8,15 +8,13 @@ const styles = StyleSheet.create({
     marginTop: 65,
     paddingLeft: 20,
     paddingRight: 20,
-    flexDirection: 'column',
-    justifyContent: 'flex-start',
     backgroundColor: '#07889B',
-    flex: 1,
-    flexWrap: 'wrap',
   },
+
   mainContent: {
     marginTop: 20,
   },
+
   title: {
     marginTop: 20,
     marginBottom: 15,
@@ -45,24 +43,31 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     flexDirection: 'row',
     alignContent: 'flex-start',
+    alignItems: 'flex-start',
     flexWrap: 'wrap',
-    flex: 1,
+    borderColor: '#efefef',
+    borderWidth: 0,
+    borderStyle: 'solid',
+    borderBottomWidth: 1,
+    paddingBottom: 10,
+    marginBottom: 10,
   },
 
   infoListItem: {
-    flex: 0.5,
-  },
-
-  isFullWidth: {
-    flex: 1
+    marginBottom: 10,
+    flex: 1,
+    flexDirection: 'column',
+    flexWrap: 'wrap',
   },
 
   infoListItemLabel: {
-    color: '#fff'
+    color: '#fff',
+    fontSize: 12,
   },
 
   infoListItemValue: {
-    color: '#fff'
+    color: '#fff',
+    fontSize: 14,
   },
 
   searchInput: {
