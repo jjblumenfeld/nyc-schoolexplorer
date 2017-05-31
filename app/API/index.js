@@ -1,8 +1,10 @@
-import SchoolData from '../../data/SE_Schools.json';
-import SchoolAccountability from '../../data/SE_Accountability.json';
-import SchoolEnrollment from '../../data/SE_Enrollment.json';
-import SchoolStaff from '../../data/SE_Staff.json';
-import SchoolClassSize from '../../data/SE_Class_Size.json';
+import { AsyncStorage } from 'react-native';
+
+import SchoolData from '../data/SE_Schools.json';
+import SchoolAccountability from '../data/SE_Accountability.json';
+import SchoolEnrollment from '../data/SE_Enrollment.json';
+import SchoolStaff from '../data/SE_Staff.json';
+import SchoolClassSize from '../data/SE_Class_Size.json';
 
 const equalsEntityCD = function(entity_cd, element) {
   if (element) {
@@ -62,18 +64,20 @@ const API = {
     school.accountability = accountability;
     return school;
   },
-  getNotes(entity_cd) {
+  async getNotes(entity_cd) {
     try {
       const value = await AsyncStorage.getItem('@NYCEXPLORER:' + entity_cd);
-      if (value !== null) {
+      if (value) {
         return value;
+      } else {
+        return '';
       }
     } catch (error) {
       // Error retrieving data
+      return '';
     }
-    return null;
   },
-  addNote(entity_cd, note) {
+  async setNote(entity_cd, note) {
     try {
       await AsyncStorage.setItem('@NYCEXPLORER:' + entity_cd, note);
     } catch (error) {

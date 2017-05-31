@@ -69,7 +69,13 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 14,
   },
-
+  notesInput: {
+    height: 100,
+    padding: 4,
+    backgroundColor: 'white',
+    padding: 8,
+    alignItems: 'flex-start',
+  },
   searchInput: {
     height: 50,
     padding: 4,

@@ -1,14 +1,33 @@
 import React, { Component } from 'react';
 
-import { StyleSheet, Text, View, ListView, FlatList, image } from 'react-native';
+import { StyleSheet, Text, TextInput, View, ListView, FlatList, image } from 'react-native';
 
 import PhoneNumber from '../PhoneNumber';
 import styles from '../../Styles';
-import API from '../API';
+import API from '../../API';
 
 export default class SchoolDetail extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      schoolNotes: ''
+    }
+  }
+
+  componentWillMount() {
+    API.getNotes(this.props.schoolInfo.ENTITY_CD).then((note) =>{
+      this.setState({
+        schoolNotes: note
+      });
+    });
+  }
+
+  notesUpdate(event) {
+    let text = event.nativeEvent.text;
+    this.setState({
+      schoolNotes: text
+    });
+    API.setNote(this.props.schoolInfo.ENTITY_CD, text);
   }
 
   render() {
@@ -198,6 +217,21 @@ export default class SchoolDetail extends Component {
                     'Not Meeting Goals' : 'n/a'
                 }
               </Text>
+            </View>
+          </View>
+
+          <View style={[styles.infoListWrapper]}>
+            <View style={[styles.infoListItem]}>
+              <Text style={styles.infoListItemLabel}>
+                Notes:
+              </Text>
+              <TextInput
+                multiline={true}
+                style={styles.notesInput}
+                value={this.state.schoolNotes}
+                onChange={this.notesUpdate.bind(this)}
+              />
+
             </View>
           </View>
         </View>
