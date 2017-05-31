@@ -4,7 +4,7 @@ import { StyleSheet, Text, View, ListView, FlatList, image } from 'react-native'
 
 import PhoneNumber from '../PhoneNumber';
 import styles from '../../Styles';
-import Separator from '../Separator';
+import API from '../API';
 
 export default class SchoolDetail extends Component {
   constructor(props) {
